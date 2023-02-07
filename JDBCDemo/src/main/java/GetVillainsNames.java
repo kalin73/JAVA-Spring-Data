@@ -9,7 +9,7 @@ public class GetVillainsNames {
 			+ "from villains v " + "JOIN minions_villains mv on v.id = mv.villain_id " + "GROUP by mv.villain_id "
 			+ "HAVING minions_count > ? " + "ORDER by minions_count;";
 
-	private static final String COLUMN_LABEL_NAME = "name";
+	
 	private static final String COLUMN_LABEL_NAME_MINION_COUNT = "minions_count";
 
 	public static void main(String[] args) throws SQLException {
@@ -19,7 +19,7 @@ public class GetVillainsNames {
 		final ResultSet result = statement.executeQuery();
 
 		if (result.next()) {
-			final String name = result.getString(COLUMN_LABEL_NAME);
+			final String name = result.getString(Constants.COLUMN_LABEL_NAME);
 			final int count = result.getInt(COLUMN_LABEL_NAME_MINION_COUNT);
 
 			System.out.printf("%s %d", name, count);
