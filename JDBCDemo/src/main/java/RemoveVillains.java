@@ -46,8 +46,7 @@ public class RemoveVillains {
 
 		connection.setAutoCommit(false);
 
-		try (
-				PreparedStatement deleteMinionStatement = connection.prepareStatement(DELETE_MINIONS_BY_VILLAIN_ID);
+		try (PreparedStatement deleteMinionStatement = connection.prepareStatement(DELETE_MINIONS_BY_VILLAIN_ID);
 				PreparedStatement deleteVillainStatement = connection.prepareStatement(DELETE_VILLAIN_BY_ID)) {
 
 			deleteMinionStatement.setInt(1, villainId);
@@ -56,6 +55,7 @@ public class RemoveVillains {
 			deleteVillainStatement.setInt(1, villainId);
 			deleteVillainStatement.executeUpdate();
 
+			connection.commit();
 			System.out.printf(DELETED_VILLAIN_FORMAT, villainName);
 			System.out.printf(COUNT_OF_DELETED_MINIONS_FORMAT, countOfDeletedMinions);
 
@@ -63,7 +63,7 @@ public class RemoveVillains {
 			e.printStackTrace();
 			connection.rollback();
 		}
-		
+
 		connection.close();
 		sc.close();
 	}
