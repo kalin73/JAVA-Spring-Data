@@ -3,12 +3,15 @@ package orm;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import orm.annotations.Column;
@@ -17,6 +20,14 @@ import orm.annotations.Id;
 
 public class EntityManager<T> implements DBContext<T> {
 	private final Connection connection;
+
+	private static final String CREATE_QUERY_FORMANT = "CREATE TABLE %s (id INT PRIMARY KEY AUTO_INCREMENT, %s)";
+	private static final String GET_ALL_COLUMNS_NAMES_BY_TABLE_NAME = "SELECT `COLUMN_NAME` "
+			+ "FROM `INFORMATION_SCHEMA`.`COLUMNS` " + "WHERE `TABLE_SCHEMA`='soft_uni' " + "AND `COLUMN_NAME` != 'id' "
+			+ "AND `TABLE_NAME`= ?;";
+	private static final String ADD_COLUMN_FORMAT = "ADD COLUMN %s %s";
+	private static final String ALTER_TABLE_FORMAT = "ALTER TABLE %s %s";
+	private static final String DELETE_RECORD_BY_CONDITION_FORMAT = "DELETE FROM %s WHERE %s = %s";
 
 	public EntityManager(Connection connection) {
 		this.connection = connection;
@@ -179,6 +190,128 @@ public class EntityManager<T> implements DBContext<T> {
 	private Field getId(Class<?> entity) {
 		return Arrays.stream(entity.getDeclaredFields()).filter(x -> x.isAnnotationPresent(Id.class)).findFirst()
 				.orElseThrow(() -> new UnsupportedOperationException("Entity does not have primary key"));
+	}
+
+	@Override
+	public void doCreate(Class<T> entity) throws SQLException {
+		final String tableName = getTableName(entity);
+
+		final List<KeyValuePair> fieldsWithTypes = getAllFieldsAndTypesInKeyValuePairs(entity);
+
+		final String fieldsWithTypesFormat = fieldsWithTypes.stream()
+				.map(keyValuePair -> String.format("%s %s", keyValuePair.key, keyValuePair.value))
+				.collect(Collectors.joining(", "));
+
+		final PreparedStatement createStatement = connection
+				.prepareStatement(String.format(CREATE_QUERY_FORMANT, tableName, fieldsWithTypesFormat));
+
+		createStatement.execute();
+
+	}
+
+	private List<KeyValuePair> getAllFieldsAndTypesInKeyValuePairs(Class<T> entity) {
+		return getAllFieldsWithoutId(entity).stream()
+				.map(field -> new KeyValuePair(getSQLColumnName(field), getSQLType(field.getType()))).toList();
+
+	}
+
+	private String getSQLType(Class<?> type) {
+		if (type == Integer.class || type == int.class) {
+			return "INT";
+
+		} else if (type == LocalDate.class) {
+			return "DATE";
+
+		}
+
+		return "VARCHAR(45)";
+	}
+
+	private String getSQLColumnName(Field field) {
+		return field.getAnnotationsByType(Column.class)[0].name();
+	}
+
+	private List<Field> getAllFieldsWithoutId(Class<T> entity) {
+		return Arrays.stream(entity.getDeclaredFields()).filter(field -> field.isAnnotationPresent(Column.class))
+				.toList();
+
+	}
+
+	@Override
+	public void doAlter(Class<T> entity) throws SQLException {
+		final String tableName = getTableName(entity);
+		final String columnStatementForNewFields = addColumnsStatementForNewFields(entity, tableName);
+
+		final String alterQuery = String.format(ALTER_TABLE_FORMAT, tableName, columnStatementForNewFields);
+
+		PreparedStatement alterStatement = connection.prepareStatement(alterQuery);
+
+		alterStatement.execute();
+
+	}
+
+	private String addColumnsStatementForNewFields(Class<T> entity, String tableName) throws SQLException {
+		final Set<String> sqlColumns = getSQLColumnNames(entity, tableName);
+		final List<Field> allFieldsWithoutId = getAllFieldsWithoutId(entity);
+
+		final List<String> newFieldsStatement = new ArrayList<>();
+
+		for (Field field : allFieldsWithoutId) {
+			final String fieldName = getSQLColumnName(field);
+
+			if (sqlColumns.contains(fieldName)) {
+				continue;
+			}
+			final String sqlType = getSQLType(field.getClass());
+
+			String addStatement = String.format(ADD_COLUMN_FORMAT, fieldName, sqlType);
+
+			newFieldsStatement.add(addStatement);
+
+		}
+
+		return String.join(", ", newFieldsStatement);
+	}
+
+	private Set<String> getSQLColumnNames(Class<T> entity, String tableName) throws SQLException {
+		Set<String> allFields = new HashSet<>();
+
+		final PreparedStatement statement = connection.prepareStatement(GET_ALL_COLUMNS_NAMES_BY_TABLE_NAME);
+		statement.setString(1, tableName);
+		ResultSet resultSet = statement.executeQuery();
+
+		while (resultSet.next()) {
+			allFields.add(resultSet.getString(1));
+		}
+
+		return allFields;
+	}
+
+	@Override
+	public void doDelete(T entity) throws SQLException, IllegalArgumentException, IllegalAccessException,
+			NoSuchFieldException, SecurityException {
+		final String tableName = getTableName(entity.getClass());
+
+		final Field idField = getId(entity.getClass());
+
+		final String idName = entity.getClass().getDeclaredField("id").getAnnotation(Id.class).name();
+		final Object idValue = getFieldValue(entity, idField);
+		final String deleteQuery = String.format(DELETE_RECORD_BY_CONDITION_FORMAT, tableName, idName, idValue);
+
+		final PreparedStatement deleteStatement = connection.prepareStatement(deleteQuery);
+
+		deleteStatement.execute();
+
+	}
+
+	private Object getFieldValue(T entity, Field idName) throws IllegalArgumentException, IllegalAccessException {
+		idName.setAccessible(true);
+
+		return idName.get(entity);
+	}
+
+	private record KeyValuePair(String key, String value) {
+
 	}
 
 }
