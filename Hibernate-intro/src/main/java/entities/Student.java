@@ -1,6 +1,7 @@
 package entities;
 
-import jakarta.persistence.*;
+import javax.persistence.GeneratedValue;
+import javax.persistence.*;
 
 @Entity
 @Table(name = "students")

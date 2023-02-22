@@ -1,10 +1,11 @@
+import javax.persistence.*;
+
 import entities.Student;
-import jakarta.persistence.*;
 
 public class JPAMain {
 
 	public static void main(String[] args) {
-		EntityManagerFactory emf = Persistence.createEntityManagerFactory("school-db");
+		EntityManagerFactory emf = Persistence.createEntityManagerFactory("PU_Name");
 
 		EntityManager entityManager = emf.createEntityManager();
 		entityManager.getTransaction().begin();
