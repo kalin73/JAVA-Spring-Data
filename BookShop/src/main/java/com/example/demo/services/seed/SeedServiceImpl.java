@@ -75,10 +75,10 @@ public class SeedServiceImpl implements SeedService {
 
             return Book.builder()
             		.title(title)
-            		.edition_type(EditionType.values()[Integer.parseInt(data[0])])
+            		.editionType(EditionType.values()[Integer.parseInt(data[0])])
             		.price(new BigDecimal(data[3]))
             		.releaseDate(LocalDate.parse(data[1], DateTimeFormatter.ofPattern("d/M/yyyy")))
-            		.age_restriction(AgeRestriction.values()[Integer.parseInt(data[4])])
+            		.ageRestriction(AgeRestriction.values()[Integer.parseInt(data[4])])
             		.author(this.authorService.getRandomAuthor())
             		.categories( categoryService.getRandomCategories())
             		.copies(Integer.parseInt(data[2]))

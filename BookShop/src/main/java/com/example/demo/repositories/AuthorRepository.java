@@ -10,6 +10,7 @@ import com.example.demo.domain.entities.Author;
 
 public interface AuthorRepository extends JpaRepository<Author, Long> {
 	Optional<List<Author>> findDistinctByBooksReleaseDateBefore(LocalDate date);
-	
-	Optional<List<Author>> findAllGroupByBooksOrderByBooksSize();
+
+	Optional<List<Author>> findAllByFirstNameEndingWith(String suffix);
+
 }

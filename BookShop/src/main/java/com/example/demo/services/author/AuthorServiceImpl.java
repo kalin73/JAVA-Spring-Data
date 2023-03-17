@@ -4,7 +4,6 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Random;
-import java.util.stream.Collectors;
 
 import org.springframework.stereotype.*;
 
@@ -42,15 +41,13 @@ public class AuthorServiceImpl implements AuthorService {
 
 	@Override
 	public List<Author> findDistinctByBooksBefore(LocalDate date) {
-		return this.authorRepository.findDistinctByBooksReleaseDateBefore(date).orElseThrow(NoSuchElementException::new);
+		return this.authorRepository.findDistinctByBooksReleaseDateBefore(date)
+				.orElseThrow(NoSuchElementException::new);
 	}
 
 	@Override
-	public List<Author> findAllGroupByBooksOrderByCount() {
-		return this.authorRepository.findAllGroupByBooksOrderByBooksSize().orElseThrow(NoSuchElementException::new)
-				.stream()
-				.sorted((f,s) -> s.getBooks().size() - f.getBooks().size())
-				.collect(Collectors.toList());
+	public List<Author> findAllByFirstNameEndsWith(String suffix) {
+		return this.authorRepository.findAllByFirstNameEndingWith(suffix).orElseThrow(NoSuchElementException::new);
 	}
 
 }

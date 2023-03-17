@@ -31,7 +31,7 @@ public class Book extends BaseEntity {
 	private String description;
 
 	@Enumerated(EnumType.STRING)
-	private EditionType edition_type;
+	private EditionType editionType;
 
 	@Column(nullable = false)
 	private BigDecimal price;
@@ -43,7 +43,7 @@ public class Book extends BaseEntity {
 	private LocalDate releaseDate;
 
 	@Enumerated(EnumType.STRING)
-	private AgeRestriction age_restriction;
+	private AgeRestriction ageRestriction;
 
 	@ManyToOne
 	private Author author;
