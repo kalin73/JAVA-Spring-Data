@@ -4,7 +4,8 @@ import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.entities.Address;
-import com.example.demo.entities.dtos.AddressDTO;
+import com.example.demo.entities.dtos.addresses.AddressDTO;
+import com.example.demo.entities.dtos.addresses.CreateAddressDTO;
 import com.example.demo.repositories.AddressRepository;
 
 @Service
@@ -18,10 +19,12 @@ public class AddressServiceImpl implements AddressService {
 	}
 
 	@Override
-	public Address create(AddressDTO data) {
+	public AddressDTO create(CreateAddressDTO data) {
 		Address address = mapper.map(data, Address.class);
 
-		return this.addressRepository.save(address);
+		Address saved = this.addressRepository.save(address);
+
+		return this.mapper.map(saved, AddressDTO.class);
 	}
 
 }

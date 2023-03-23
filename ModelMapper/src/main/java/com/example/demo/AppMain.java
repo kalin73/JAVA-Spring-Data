@@ -7,35 +7,37 @@ import java.util.Scanner;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
-import com.example.demo.entities.Address;
 import com.example.demo.entities.Employee;
-import com.example.demo.entities.dtos.AddressDTO;
 import com.example.demo.entities.dtos.CreateEmployeeDTO;
+import com.example.demo.entities.dtos.addresses.AddressDTO;
+import com.example.demo.entities.dtos.addresses.CreateAddressDTO;
 import com.example.demo.services.AddressService;
 import com.example.demo.services.EmployeeService;
+import com.google.gson.Gson;
 
 @Component
 public class AppMain implements CommandLineRunner {
 	private final AddressService addressService;
 	private final EmployeeService employeeService;
+	private final Scanner sc;
+	private final Gson gson;
 
-	public AppMain(AddressService addressService, EmployeeService employeeService) {
+	public AppMain(AddressService addressService, EmployeeService employeeService, Gson gson, Scanner sc) {
 		this.addressService = addressService;
 		this.employeeService = employeeService;
+		this.gson = gson;
+		this.sc = sc;
 	}
 
 	@Override
 	public void run(String... args) throws Exception {
-		Scanner sc = new Scanner(System.in);
 
-		// createAddress(sc);
+		createAddress();
 		// createEmployee(sc);
 		// printAllEmployees();
 		// printEmployeeNames();
 
-		printEmployeeNameAndSalary();
-
-		sc.close();
+		// printEmployeeNameAndSalary();
 
 	}
 
@@ -62,7 +64,7 @@ public class AppMain implements CommandLineRunner {
 		String country = sc.nextLine();
 		String city = sc.nextLine();
 
-		AddressDTO address = new AddressDTO(country, city);
+		CreateAddressDTO address = new CreateAddressDTO(country, city);
 
 		CreateEmployeeDTO employeeDTO = new CreateEmployeeDTO(firstName, null, salary, birthday, address);
 
@@ -71,15 +73,14 @@ public class AppMain implements CommandLineRunner {
 		System.out.println(employee);
 	}
 
-	public void createAddress(Scanner sc) {
-		String country = sc.nextLine();
-		String city = sc.nextLine();
+	public void createAddress() {
+		String input = sc.nextLine();
 
-		AddressDTO data = new AddressDTO(country, city);
+		CreateAddressDTO data = this.gson.fromJson(input, CreateAddressDTO.class);
 
-		Address address = addressService.create(data);
+		AddressDTO address = addressService.create(data);
 
-		System.out.println(address);
+		System.out.println(this.gson.toJson(address));
 	}
 
 }

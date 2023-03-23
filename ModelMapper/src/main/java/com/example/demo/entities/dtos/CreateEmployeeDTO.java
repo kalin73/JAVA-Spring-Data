@@ -3,19 +3,25 @@ package com.example.demo.entities.dtos;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
+import com.example.demo.entities.dtos.addresses.CreateAddressDTO;
+import com.google.gson.annotations.Expose;
+
 public class CreateEmployeeDTO {
+	@Expose
 	private String firstName;
 
 	private String lastName;
 
+	@Expose
 	private BigDecimal salary;
-
+	
 	private LocalDate birthday;
 
-	private AddressDTO address;
+	@Expose
+	private CreateAddressDTO address;
 
 	public CreateEmployeeDTO(String firstName, String lastName, BigDecimal salary, LocalDate birthday,
-			AddressDTO address) {
+			CreateAddressDTO address) {
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.salary = salary;
@@ -40,7 +46,7 @@ public class CreateEmployeeDTO {
 		return birthday;
 	}
 
-	public AddressDTO getAddress() {
+	public CreateAddressDTO getAddress() {
 		return address;
 	}
 

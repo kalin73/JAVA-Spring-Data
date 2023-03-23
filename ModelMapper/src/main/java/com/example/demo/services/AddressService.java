@@ -1,10 +1,10 @@
 package com.example.demo.services;
 
-import com.example.demo.entities.Address;
-import com.example.demo.entities.dtos.AddressDTO;
+import com.example.demo.entities.dtos.addresses.AddressDTO;
+import com.example.demo.entities.dtos.addresses.CreateAddressDTO;
 
 public interface AddressService {
 
-	Address create(AddressDTO data);
+	AddressDTO create(CreateAddressDTO data);
 
 }
