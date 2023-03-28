@@ -4,8 +4,8 @@ import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.entities.Address;
-import com.example.demo.entities.dtos.addresses.AddressDTO;
-import com.example.demo.entities.dtos.addresses.CreateAddressDTO;
+import com.example.demo.entities.dtos.address.AddressDTO;
+import com.example.demo.entities.dtos.address.CreateAddressDTO;
 import com.example.demo.repositories.AddressRepository;
 
 @Service

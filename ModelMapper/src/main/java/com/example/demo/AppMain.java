@@ -5,17 +5,16 @@ import java.time.LocalDate;
 import java.util.Scanner;
 
 import org.springframework.boot.CommandLineRunner;
-import org.springframework.stereotype.Component;
 
 import com.example.demo.entities.Employee;
 import com.example.demo.entities.dtos.CreateEmployeeDTO;
-import com.example.demo.entities.dtos.addresses.AddressDTO;
-import com.example.demo.entities.dtos.addresses.CreateAddressDTO;
+import com.example.demo.entities.dtos.address.AddressDTO;
+import com.example.demo.entities.dtos.address.CreateAddressDTO;
 import com.example.demo.services.AddressService;
 import com.example.demo.services.EmployeeService;
 import com.google.gson.Gson;
 
-@Component
+//@Component
 public class AppMain implements CommandLineRunner {
 	private final AddressService addressService;
 	private final EmployeeService employeeService;

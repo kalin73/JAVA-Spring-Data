@@ -11,7 +11,7 @@ import org.springframework.boot.CommandLineRunner;
 
 import com.example.demo.entities.dtos.Company;
 import com.example.demo.entities.dtos.CreateEmployeeDTO;
-import com.example.demo.entities.dtos.addresses.CreateAddressDTO;
+import com.example.demo.entities.dtos.address.CreateAddressDTO;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonElement;

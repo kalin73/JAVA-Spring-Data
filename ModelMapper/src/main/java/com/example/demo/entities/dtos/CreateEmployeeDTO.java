@@ -3,7 +3,7 @@ package com.example.demo.entities.dtos;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
-import com.example.demo.entities.dtos.addresses.CreateAddressDTO;
+import com.example.demo.entities.dtos.address.CreateAddressDTO;
 import com.google.gson.annotations.Expose;
 
 public class CreateEmployeeDTO {

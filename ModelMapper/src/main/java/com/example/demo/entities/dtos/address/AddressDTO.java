@@ -1,4 +1,4 @@
-package com.example.demo.entities.dtos.addresses;
+package com.example.demo.entities.dtos.address;
 
 public class AddressDTO extends CreateAddressDTO {
 	private long id;

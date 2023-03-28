@@ -1,4 +1,4 @@
-package com.example.demo.entities.dtos.addresses;
+package com.example.demo.entities.dtos.address;
 
 import com.google.gson.annotations.Expose;
 
