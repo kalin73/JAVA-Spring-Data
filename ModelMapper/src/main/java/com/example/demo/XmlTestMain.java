@@ -2,12 +2,12 @@ package com.example.demo;
 
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.CommandLineRunner;
-import org.springframework.stereotype.Component;
 
 import com.example.demo.entities.dtos.address.AddressXMLDto;
 import com.example.demo.entities.dtos.address.CountryXmlDto;
 
-import jakarta.xml.bind.*;
+import jakarta.xml.bind.JAXBContext;
+import jakarta.xml.bind.Marshaller;
 
 //@Component
 public class XmlTestMain implements CommandLineRunner {

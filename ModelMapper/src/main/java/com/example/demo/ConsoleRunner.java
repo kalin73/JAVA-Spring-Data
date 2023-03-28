@@ -1,17 +1,11 @@
 package com.example.demo;
 
-import java.math.BigDecimal;
 import java.time.LocalDate;
 
-import org.modelmapper.Converter;
 import org.modelmapper.ModelMapper;
-import org.modelmapper.TypeMap;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
-import com.example.demo.entities.Address;
-import com.example.demo.entities.Employee;
-import com.example.demo.entities.dtos.EmployeeDTO;
 import com.example.demo.entities.dtos.converterTest.Birthday;
 import com.example.demo.entities.dtos.converterTest.BirthdayDto;
 
@@ -25,8 +19,6 @@ public class ConsoleRunner implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
-		ModelMapper mapper = new ModelMapper();
-
 		testConverter();
 
 //		PropertyMap<Employee, EmployeeDTO> propertyMap = new PropertyMap<>() {
