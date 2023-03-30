@@ -1,14 +1,23 @@
-package com.softuni.jsonexercise.domain.dtos.users;
+package com.softuni.jsonexercise.domain.dtos.users.wrappers;
 
 import java.util.List;
 
-import com.google.gson.annotations.Expose;
+import com.softuni.jsonexercise.domain.dtos.users.UsersWithProductsDto;
 
+import jakarta.xml.bind.annotation.XmlAccessType;
+import jakarta.xml.bind.annotation.XmlAccessorType;
+import jakarta.xml.bind.annotation.XmlAttribute;
+import jakarta.xml.bind.annotation.XmlElement;
+import jakarta.xml.bind.annotation.XmlRootElement;
+
+@XmlRootElement(name = "users")
+@XmlAccessorType(XmlAccessType.FIELD)
 public class UsersWithProductsWrapperDto {
-	@Expose
+	
+	@XmlAttribute(name = "count")
 	private Integer usersCount;
 
-	@Expose
+	@XmlElement(name = "user")
 	private List<UsersWithProductsDto> users;
 
 	public UsersWithProductsWrapperDto() {

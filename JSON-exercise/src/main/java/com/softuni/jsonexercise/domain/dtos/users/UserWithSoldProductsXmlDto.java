@@ -1,12 +1,11 @@
 package com.softuni.jsonexercise.domain.dtos.users;
 
-import java.util.List;
-
-import com.softuni.jsonexercise.domain.dtos.products.ProductSoldDto;
 import com.softuni.jsonexercise.domain.dtos.products.wrappers.ProductSoldWrapperDto;
 
 import jakarta.xml.bind.annotation.XmlAccessType;
 import jakarta.xml.bind.annotation.XmlAccessorType;
+import jakarta.xml.bind.annotation.XmlAttribute;
+import jakarta.xml.bind.annotation.XmlElement;
 import jakarta.xml.bind.annotation.XmlRootElement;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -19,17 +18,13 @@ import lombok.Setter;
 @AllArgsConstructor
 @XmlRootElement(name = "user")
 @XmlAccessorType(XmlAccessType.FIELD)
-public class UsersWithSoldProductsDto {
-
+public class UserWithSoldProductsXmlDto {
+	@XmlAttribute(name = "first-name")
 	private String firstName;
 
+	@XmlAttribute(name = "last-name")
 	private String lastName;
 
-	private List<ProductSoldDto> sellingProducts;
-
-	public static List<UserWithSoldProductsXmlDto> toUsersWithSoldProductsDto(List<UsersWithSoldProductsDto> input) {
-		return input.stream().map(user -> new UserWithSoldProductsXmlDto(user.getFirstName(), user.getLastName(),
-				new ProductSoldWrapperDto(user.getSellingProducts()))).toList();
-	}
-
+	@XmlElement(name = "sold-products")
+	private ProductSoldWrapperDto sellingProducts;
 }

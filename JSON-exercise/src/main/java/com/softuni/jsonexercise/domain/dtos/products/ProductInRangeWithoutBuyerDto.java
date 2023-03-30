@@ -2,24 +2,28 @@ package com.softuni.jsonexercise.domain.dtos.products;
 
 import java.math.BigDecimal;
 
-import com.google.gson.annotations.Expose;
+import jakarta.xml.bind.annotation.XmlAccessType;
+import jakarta.xml.bind.annotation.XmlAccessorType;
+import jakarta.xml.bind.annotation.XmlAttribute;
+import jakarta.xml.bind.annotation.XmlRootElement;
 
+@XmlRootElement(name = "product")
+@XmlAccessorType(XmlAccessType.FIELD)
 public class ProductInRangeWithoutBuyerDto {
-	@Expose
+	@XmlAttribute
 	private String name;
-	
-	@Expose
+
+	@XmlAttribute
 	private BigDecimal price;
-	
-	@Expose
+
+	@XmlAttribute
 	private String seller;
 
 	public ProductInRangeWithoutBuyerDto() {
-		
+
 	}
 
 	public ProductInRangeWithoutBuyerDto(String name, BigDecimal price, String seller) {
-		super();
 		this.name = name;
 		this.price = price;
 		this.seller = seller;
@@ -48,6 +52,5 @@ public class ProductInRangeWithoutBuyerDto {
 	public void setSeller(String seller) {
 		this.seller = seller;
 	}
-	
-	
+
 }

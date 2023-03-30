@@ -2,19 +2,25 @@ package com.softuni.jsonexercise.domain.dtos.categories;
 
 import java.math.BigDecimal;
 
-import com.google.gson.annotations.Expose;
+import jakarta.xml.bind.annotation.XmlAccessType;
+import jakarta.xml.bind.annotation.XmlAccessorType;
+import jakarta.xml.bind.annotation.XmlAttribute;
+import jakarta.xml.bind.annotation.XmlElement;
+import jakarta.xml.bind.annotation.XmlRootElement;
 
+@XmlRootElement(name = "category")
+@XmlAccessorType(XmlAccessType.FIELD)
 public class CategoryProductsSummaryDto {
-	@Expose
+	@XmlAttribute
 	private String name;
 
-	@Expose
+	@XmlElement(name = "products-count")
 	private Long productsCount;
 
-	@Expose
+	@XmlElement(name = "average-price")
 	private Double avgPrice;
 
-	@Expose
+	@XmlElement(name = "total-revenue")
 	private BigDecimal totalRevenue;
 
 	public CategoryProductsSummaryDto() {

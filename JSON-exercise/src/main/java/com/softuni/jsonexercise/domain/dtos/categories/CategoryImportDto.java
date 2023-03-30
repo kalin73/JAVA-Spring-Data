@@ -1,9 +1,15 @@
 package com.softuni.jsonexercise.domain.dtos.categories;
 
-import com.google.gson.annotations.Expose;
+import jakarta.xml.bind.annotation.XmlAccessType;
+import jakarta.xml.bind.annotation.XmlAccessorType;
+import jakarta.xml.bind.annotation.XmlElement;
+import jakarta.xml.bind.annotation.XmlRootElement;
 
+@XmlRootElement(name = "category")
+@XmlAccessorType(XmlAccessType.FIELD)
 public class CategoryImportDto {
-	@Expose
+
+	@XmlElement
 	private String name;
 
 	public CategoryImportDto() {

@@ -1,15 +1,21 @@
 package com.softuni.jsonexercise.domain.dtos.users;
 
-import com.google.gson.annotations.Expose;
+import jakarta.xml.bind.annotation.XmlAccessType;
+import jakarta.xml.bind.annotation.XmlAccessorType;
+import jakarta.xml.bind.annotation.XmlAttribute;
+import jakarta.xml.bind.annotation.XmlRootElement;
 
+@XmlRootElement(name = "user")
+@XmlAccessorType(XmlAccessType.FIELD)
 public class UserImportDto {
-	@Expose
+	
+	@XmlAttribute(name = "first-name")
 	private String firstName;
-	
-	@Expose
+
+	@XmlAttribute(name = "last-name")
 	private String lastName;
-	
-	@Expose
+
+	@XmlAttribute
 	private int age;
 
 	public UserImportDto() {

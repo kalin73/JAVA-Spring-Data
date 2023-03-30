@@ -29,7 +29,6 @@ public class ProductDto {
 	}
 
 	public ProductDto(String name, BigDecimal price, UserDto buyer, UserDto seller) {
-		this();
 		this.name = name;
 		this.price = price;
 		this.buyer = buyer;

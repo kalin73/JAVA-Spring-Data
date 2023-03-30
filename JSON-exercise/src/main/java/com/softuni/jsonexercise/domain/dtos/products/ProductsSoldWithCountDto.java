@@ -2,21 +2,27 @@ package com.softuni.jsonexercise.domain.dtos.products;
 
 import java.util.List;
 
-import com.google.gson.annotations.Expose;
+import jakarta.xml.bind.annotation.XmlAccessType;
+import jakarta.xml.bind.annotation.XmlAccessorType;
+import jakarta.xml.bind.annotation.XmlAttribute;
+import jakarta.xml.bind.annotation.XmlElement;
+import jakarta.xml.bind.annotation.XmlRootElement;
 
+@XmlRootElement(name = "sold-products")
+@XmlAccessorType(XmlAccessType.FIELD)
 public class ProductsSoldWithCountDto {
-	@Expose
+	
+	@XmlAttribute
 	private Integer count;
 
-	@Expose
+	@XmlElement(name = "product")
 	private List<ProductBasicInfoDto> products;
 
 	public ProductsSoldWithCountDto() {
-		super();
+		
 	}
 
 	public ProductsSoldWithCountDto(List<ProductBasicInfoDto> products) {
-		super();
 		this.products = products;
 		this.count = products.size();
 	}

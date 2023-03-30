@@ -5,6 +5,8 @@ import java.util.List;
 
 import com.softuni.jsonexercise.domain.dtos.categories.CategoryProductsSummaryDto;
 
+import jakarta.xml.bind.JAXBException;
+
 public interface CategoryService {
-	List<CategoryProductsSummaryDto> getCategoriesSummary() throws IOException;
+	List<CategoryProductsSummaryDto> getCategoriesSummary() throws IOException, JAXBException;
 }

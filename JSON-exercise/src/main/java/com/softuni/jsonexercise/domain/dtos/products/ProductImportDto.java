@@ -2,13 +2,18 @@ package com.softuni.jsonexercise.domain.dtos.products;
 
 import java.math.BigDecimal;
 
-import com.google.gson.annotations.Expose;
+import jakarta.xml.bind.annotation.XmlAccessType;
+import jakarta.xml.bind.annotation.XmlAccessorType;
+import jakarta.xml.bind.annotation.XmlElement;
+import jakarta.xml.bind.annotation.XmlRootElement;
 
+@XmlRootElement(name = "product")
+@XmlAccessorType(XmlAccessType.FIELD)
 public class ProductImportDto {
-	@Expose
+	@XmlElement
 	private String name;
 
-	@Expose
+	@XmlElement
 	private BigDecimal price;
 
 	public ProductImportDto(String name, BigDecimal price) {

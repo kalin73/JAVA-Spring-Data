@@ -32,8 +32,8 @@ public class ConsoleRunner implements CommandLineRunner {
 		// this.userService.findAllBySellingProductsBuyerIsNotNullOrderBySellingProductsBuyerFirstName();
 
 		// this.categoryService.getCategoriesSummary();
-		
-		this.userService.usersAndProducts();
+
+		 this.userService.usersAndProducts();
 
 	}
 

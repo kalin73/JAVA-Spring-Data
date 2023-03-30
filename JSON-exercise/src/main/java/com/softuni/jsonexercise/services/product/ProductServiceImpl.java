@@ -1,5 +1,11 @@
 package com.softuni.jsonexercise.services.product;
 
+import static com.softuni.jsonexercise.constant.JsonFiles.PRODUCTS_WITHOUT_BUYERS_IN_RANGE_JSON;
+import static com.softuni.jsonexercise.constant.JsonFiles.PRODUCTS_WITHOUT_BUYERS_IN_RANGE_XML;
+import static com.softuni.jsonexercise.constant.Utils.modelMapper;
+import static com.softuni.jsonexercise.constant.Utils.writeJsonIntoFile;
+import static com.softuni.jsonexercise.constant.Utils.writeXmlIntoFile;
+
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.List;
@@ -8,12 +14,12 @@ import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 
-import static com.softuni.jsonexercise.constant.Utils.*;
-
-import static com.softuni.jsonexercise.constant.JsonFiles.*;
 import com.softuni.jsonexercise.domain.dtos.products.ProductDto;
 import com.softuni.jsonexercise.domain.dtos.products.ProductInRangeWithoutBuyerDto;
+import com.softuni.jsonexercise.domain.dtos.products.wrappers.ProductsInRangeWithoutBuyerWrapperDto;
 import com.softuni.jsonexercise.repositories.ProductRepository;
+
+import jakarta.xml.bind.JAXBException;
 
 @Service
 public class ProductServiceImpl implements ProductService {
@@ -26,15 +32,17 @@ public class ProductServiceImpl implements ProductService {
 
 	@Override
 	public List<ProductInRangeWithoutBuyerDto> findAllByPriceBetweenAndBuyerIsNullOrderByPrice(BigDecimal low,
-			BigDecimal high) throws IOException {
+			BigDecimal high) throws IOException, JAXBException {
 		List<ProductInRangeWithoutBuyerDto> products = this.productRepository
 				.findAllByPriceBetweenAndBuyerIsNullOrderByPrice(low, high).orElseThrow(NoSuchElementException::new)
-				.stream()
-				.map(product -> modelMapper.map(product, ProductDto.class))
-				.map(ProductDto::toProductInRangeWithoutBuyerDto)
-				.collect(Collectors.toList());
+				.stream().map(product -> modelMapper.map(product, ProductDto.class))
+				.map(ProductDto::toProductInRangeWithoutBuyerDto).collect(Collectors.toList());
 
-		writeJsonIntoFile(products, PRODUCTS_WUTHOUT_BUYERS_IN_RANGE);
+		ProductsInRangeWithoutBuyerWrapperDto productsWrapper = new ProductsInRangeWithoutBuyerWrapperDto(products);
+
+		writeJsonIntoFile(products, PRODUCTS_WITHOUT_BUYERS_IN_RANGE_JSON);
+
+		writeXmlIntoFile(productsWrapper, PRODUCTS_WITHOUT_BUYERS_IN_RANGE_XML);
 
 		return products;
 	}

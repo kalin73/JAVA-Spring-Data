@@ -1,0 +1,68 @@
+[
+  {
+    "name": "Business",
+    "productsCount": 71,
+    "avgPrice": 842.188028,
+    "totalRevenue": 59795.35
+  },
+  {
+    "name": "Autoparts",
+    "productsCount": 75,
+    "avgPrice": 713.719067,
+    "totalRevenue": 53528.93
+  },
+  {
+    "name": "Fashion",
+    "productsCount": 84,
+    "avgPrice": 764.200833,
+    "totalRevenue": 64192.87
+  },
+  {
+    "name": "Garden",
+    "productsCount": 85,
+    "avgPrice": 756.302353,
+    "totalRevenue": 64285.70
+  },
+  {
+    "name": "Drugs",
+    "productsCount": 86,
+    "avgPrice": 732.557674,
+    "totalRevenue": 62999.96
+  },
+  {
+    "name": "Weapons",
+    "productsCount": 86,
+    "avgPrice": 756.609767,
+    "totalRevenue": 65068.44
+  },
+  {
+    "name": "Other",
+    "productsCount": 88,
+    "avgPrice": 756.71375,
+    "totalRevenue": 66590.81
+  },
+  {
+    "name": "Electronics",
+    "productsCount": 90,
+    "avgPrice": 798.548778,
+    "totalRevenue": 71869.39
+  },
+  {
+    "name": "Adult",
+    "productsCount": 92,
+    "avgPrice": 753.936196,
+    "totalRevenue": 69362.13
+  },
+  {
+    "name": "For Children",
+    "productsCount": 93,
+    "avgPrice": 733.916237,
+    "totalRevenue": 68254.21
+  },
+  {
+    "name": "Sports",
+    "productsCount": 101,
+    "avgPrice": 784.234653,
+    "totalRevenue": 79207.70
+  }
+]
